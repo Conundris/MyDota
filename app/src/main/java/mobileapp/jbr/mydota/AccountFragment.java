@@ -1,11 +1,10 @@
 package mobileapp.jbr.mydota;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 
@@ -41,6 +39,12 @@ public class AccountFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private TextView textView;
+    private ImageView imageView;
+    private TextView txtWinsValue;
+    private TextView txtLossesValue;
+    private TextView txtWinRateValue;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -82,24 +86,33 @@ public class AccountFragment extends Fragment {
     }
 
     private void getData() {
-
-        final TextView mTextView = (TextView) getActivity().findViewById(R.id.textView);
-        final ImageView mImageView = (ImageView) getActivity().findViewById(R.id.imageView);
+        System.out.println(textView);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="https://api.opendota.com/api/players/70677728";
 
-            // Request a jsonobject response from the provided URL.
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+        JsonObjectRequest jsObjProfile = getProfile();
+        JsonObjectRequest jsObjMatches = getWinLossRate();
+
+
+        // Add the request to the RequestQueue.
+            queue.add(jsObjProfile);
+            queue.add(jsObjMatches);
+
+    }
+
+    private JsonObjectRequest getWinLossRate() {
+        String url ="https://api.opendota.com/api/players/70677728/wl";
+        // Request a jsonobject response from the provided URL.
+        return new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
                         try {
-                            JSONObject profile = response.getJSONObject("profile");
-                            mTextView.setText(profile.getString("personaname"));
-                            new DownloadImageTask(mImageView).execute(profile.getString("avatarfull"));
+                            txtWinsValue.setText(response.getString("win"));
+                            txtLossesValue.setText(response.getString("lose"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -108,19 +121,52 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        mTextView.setText("Did not work.");
+
                     }
                 });
-    // Add the request to the RequestQueue.
-            queue.add(jsObjRequest);
+    }
 
+    @NonNull
+    private JsonObjectRequest getProfile() {
+        String url ="https://api.opendota.com/api/players/70677728";
+        // Request a jsonobject response from the provided URL.
+        return new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject profile = response.getJSONObject("profile");
+                            System.out.println(profile.toString());
+                            textView.setText(profile.getString("personaname"));
+                            new DownloadImageTask(imageView).execute(profile.getString("avatarfull"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        textView.setText("Did not work.");
+                    }
+                });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        //Get Items in View
+        textView = (TextView) view.findViewById(R.id.textView);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
+        txtWinsValue = (TextView) view.findViewById(R.id.txtWinValue);
+        txtLossesValue = (TextView) view.findViewById(R.id.txtLossesValue);
+        txtWinRateValue = (TextView) view.findViewById(R.id.txtWinRateValue);
+
+        return view;
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event

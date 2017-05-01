@@ -24,12 +24,12 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 AccountFragment tab1 = new AccountFragment();
                 return tab1;
-            /*case 1:
-                TabFragment2 tab2 = new TabFragment2();
+            case 1:
+                AccountFragment tab2 = new AccountFragment();
                 return tab2;
             case 2:
-                TabFragment3 tab3 = new TabFragment3();
-                return tab3;*/
+                AccountFragment tab3 = new AccountFragment();
+                return tab3;
             default:
                 return null;
 

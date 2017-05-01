@@ -37,8 +37,9 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 
-public class AccountActivity extends AppCompatActivity {
+import mobileapp.jbr.mydota.dummy.DummyContent;
 
+public class AccountActivity extends AppCompatActivity implements MatchesFragment.OnListFragmentInteractionListener {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -159,6 +160,11 @@ public class AccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -210,7 +216,7 @@ public class AccountActivity extends AppCompatActivity {
                     AccountFragment tab1 = new AccountFragment();
                     return tab1;
                 case 1:
-                    AccountFragment tab2 = new AccountFragment();
+                    MatchesFragment tab2 = new MatchesFragment();
                     return tab2;
                 case 2:
                     AccountFragment tab3 = new AccountFragment();

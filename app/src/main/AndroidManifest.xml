@@ -28,11 +28,6 @@
             android:label="MyDota"
             android:parentActivityName=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="mobileapp.jbr.mydota.LoginActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
