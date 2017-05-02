@@ -1,19 +1,33 @@
 package mobileapp.jbr.mydota;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import mobileapp.jbr.mydota.dummy.DummyContent;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import mobileapp.jbr.mydota.Models.Match;
 import mobileapp.jbr.mydota.dummy.DummyContent.DummyItem;
 
-import java.util.List;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A fragment representing a list of Items.
@@ -26,8 +40,12 @@ public class MatchesFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 4;
     private OnListFragmentInteractionListener mListener;
+
+    private int steamID;
+    private List<Match> matches = new ArrayList<>();
+    private ListView listView;
+    private MatchesListAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -50,28 +68,83 @@ public class MatchesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        SharedPreferences prefs = getContext().getSharedPreferences("MyDota", MODE_PRIVATE);
+
+        steamID = prefs.getInt("steamID", 70677728);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_matches_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_matches, container, false);
+        //Get Items in View
+        listView = (ListView) view.findViewById(R.id.list);
+        adapter = new MatchesListAdapter(getActivity(), matches);
+        listView.setAdapter(adapter);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyMatchesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+        getMatches();
+
         return view;
+    }
+
+    private void getMatches() {
+        String url ="https://api.opendota.com/api/players/" + steamID + "/matches?limit=10";
+        // Request a jsonobject response from the provided URL.
+        JsonArrayRequest JORequest =  new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("VolleyRequest", response.toString());
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                                long startTime = System.nanoTime();
+
+                                for (int i = 0; i < response.length(); i++) {
+
+                                    JSONObject row = (JSONObject) response.get(i);
+
+                                    Match match = new Match();
+                                    match.match_id = row.getString("match_id");
+                                    match.assists = row.getInt("assists");
+                                    match.deaths = row.getInt("deaths");
+                                    match.kills = row.getInt("kills");
+                                    match.start_time = row.getDouble("start_time");
+                                    match.duration = row.getInt("duration");
+                                    match.game_mode = row.getInt("game_mode");
+                                    match.hero_id = row.getInt("hero_id");
+                                    match.lobby_type = row.getInt("lobby_type");
+                                    match.radiant_win = row.getBoolean("radiant_win");
+                                    match.player_slot = row.getInt("player_slot");
+
+                                    matches.add(match);
+                                }
+                                long endTime = System.nanoTime();
+                                Toast.makeText(getContext(),
+                                        "Matches Loaded", Toast.LENGTH_LONG).show();
+                                Log.d("VolleyRequest", "Got All Matches: " + ((endTime - startTime) / 1000000));
+
+                            // notifying list adapter about data changes
+                            // so that it renders the list view with updated data
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            VolleyLog.d("VolleyRequest", "Error: " + e.getMessage());
+                            Toast.makeText(getContext(),
+                                    e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("VolleyRequest", "Error: " + error.getMessage());
+                        Toast.makeText(getContext(),
+                                error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        // Add the request to the RequestQueue.
+        AppController.getInstance().addToRequestQueue(JORequest);
     }
 
 

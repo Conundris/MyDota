@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context="mobileapp.jbr.mydota.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,13 +16,15 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="114dp"
+            android:text="TextView"
+            android:textColor="@android:color/white"
+            app:layout_constraintHorizontal_bias="0.441"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="114dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -29,17 +32,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="31dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/screen_background_light_transparent" />
+            app:srcCompat="@android:drawable/screen_background_light_transparent"
+            app:layout_constraintHorizontal_bias="0.452" />
 
         <TextView
             android:id="@+id/txtWins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="115dp"
+            android:layout_marginLeft="94dp"
             android:layout_marginTop="151dp"
             android:text="Wins"
             android:textColor="@android:color/holo_green_light"
@@ -57,7 +61,7 @@
             android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/txtWins"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="21dp" />
 
         <TextView
             android:id="@+id/txtWinRate"
@@ -67,8 +71,9 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="151dp"
             android:text="Win Rate"
+            android:textColor="@android:color/white"
             android:visibility="visible"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.015"
             app:layout_constraintLeft_toRightOf="@+id/txtLosses"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -77,30 +82,33 @@
             android:id="@+id/txtWinValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="123dp"
+            android:layout_marginLeft="114dp"
             android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtWins" />
 
         <TextView
             android:id="@+id/txtLossesValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/txtWinValue"
             android:layout_marginLeft="8dp"
-            app:layout_constraintRight_toLeftOf="@+id/txtWinRateValue"
             android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/txtLosses"
-            app:layout_constraintHorizontal_bias="0.418" />
+            android:textColor="@android:color/white"
+            app:layout_constraintHorizontal_bias="0.435"
+            app:layout_constraintLeft_toRightOf="@+id/txtWinValue"
+            app:layout_constraintRight_toLeftOf="@+id/txtWinRateValue"
+            app:layout_constraintTop_toBottomOf="@+id/txtLosses" />
 
         <TextView
             android:id="@+id/txtWinRateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="162dp"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="135dp"
             android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtWinRate" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

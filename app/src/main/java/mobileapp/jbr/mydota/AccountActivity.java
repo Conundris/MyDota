@@ -95,16 +95,6 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
        /*     // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
             String url ="https://api.opendota.com/api/players/70677728";
@@ -219,11 +209,10 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
                     MatchesFragment tab2 = new MatchesFragment();
                     return tab2;
                 case 2:
-                    AccountFragment tab3 = new AccountFragment();
+                    StatsFragement tab3 = new StatsFragement();
                     return tab3;
                 default:
                     return null;
-
             }
         }
 

@@ -1,9 +1,11 @@
 package mobileapp.jbr.mydota;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,27 +26,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+import mobileapp.jbr.mydota.Models.Account;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AccountFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import static android.content.Context.MODE_PRIVATE;
+
 public class AccountFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private TextView textView;
     private ImageView imageView;
     private TextView txtWinsValue;
     private TextView txtLossesValue;
     private TextView txtWinRateValue;
+
+    private int winRate;
+    private int lossRate;
+    private Account account;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,49 +58,42 @@ public class AccountFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment AccountFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static AccountFragment newInstance(String param1, String param2) {
         AccountFragment fragment = new AccountFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
+        SharedPreferences prefs = getContext().getSharedPreferences("MyDota", MODE_PRIVATE);
+
+        account = new Account();
+        account.steamID = prefs.getInt("steamID", 70677728);
+
+        getData();
+    }
+
+    public void onResume() {
+        super.onResume();
         getData();
     }
 
     private void getData() {
         System.out.println(textView);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-
         JsonObjectRequest jsObjProfile = getProfile();
         JsonObjectRequest jsObjMatches = getWinLossRate();
-
-
         // Add the request to the RequestQueue.
-            queue.add(jsObjProfile);
-            queue.add(jsObjMatches);
-
+        AppController.getInstance().addToRequestQueue(jsObjProfile);
+        AppController.getInstance().addToRequestQueue(jsObjMatches);
     }
 
     private JsonObjectRequest getWinLossRate() {
-        String url ="https://api.opendota.com/api/players/70677728/wl";
+        String url ="https://api.opendota.com/api/players/" + account.steamID + "/wl";
         // Request a jsonobject response from the provided URL.
         return new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -111,8 +102,11 @@ public class AccountFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         System.out.println(response.toString());
                         try {
-                            txtWinsValue.setText(response.getString("win"));
-                            txtLossesValue.setText(response.getString("lose"));
+                            winRate = response.getInt("win");
+                            lossRate = response.getInt("lose");
+                            txtWinsValue.setText(String.valueOf(winRate));
+                            txtLossesValue.setText(String.valueOf(lossRate));
+                            txtWinRateValue.setText(String.valueOf(getWinRate(winRate, lossRate)) + "%");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -126,9 +120,22 @@ public class AccountFragment extends Fragment {
                 });
     }
 
+    private double getWinRate(int winRate, int lossRate) {
+        int totalMatches = winRate + lossRate;
+        return round((double)winRate / (double)totalMatches * 100, 2);
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
     @NonNull
     private JsonObjectRequest getProfile() {
-        String url ="https://api.opendota.com/api/players/70677728";
+        String url ="https://api.opendota.com/api/players/" + account.steamID;
         // Request a jsonobject response from the provided URL.
         return new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -137,6 +144,7 @@ public class AccountFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONObject profile = response.getJSONObject("profile");
+
                             System.out.println(profile.toString());
                             textView.setText(profile.getString("personaname"));
                             new DownloadImageTask(imageView).execute(profile.getString("avatarfull"));
