@@ -28,17 +28,17 @@
         android:textCursorDrawable="@color/colorPrimaryDark"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="14dp"
         app:layout_constraintBottom_toTopOf="@+id/email_sign_in_button"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.375" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/imageView2"
         android:layout_width="351dp"
         android:layout_height="216dp"
@@ -53,14 +53,30 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.526" />
+        app:layout_constraintHorizontal_bias="0.526" />-->
+
+    <mobileapp.jbr.mydota.GifImageView
+        android:id="@+id/GifImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/small"
+        tools:layout_editor_absoluteY="0dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="42dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleX="1.5"
+        android:scaleY="1.5"/>
 
     <Button
         android:id="@+id/email_sign_in_button"
         style="?android:textAppearanceSmall"
         android:layout_width="353dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="153dp"
+        android:layout_marginBottom="168dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="?attr/colorButtonNormal"
@@ -80,19 +96,19 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="353dp"
-        android:layout_height="39dp"
+        android:layout_width="352dp"
+        android:layout_height="46dp"
         android:text="MyDota"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="36sp"
         android:visibility="visible"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GifImageView" />
 
 
 </android.support.constraint.ConstraintLayout>

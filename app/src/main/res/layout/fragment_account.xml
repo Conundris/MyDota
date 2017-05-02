@@ -12,91 +12,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="114dp"
-            android:text="TextView"
-            android:textColor="@android:color/white"
-            app:layout_constraintHorizontal_bias="0.441"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/screen_background_light_transparent"
-            app:layout_constraintHorizontal_bias="0.452" />
+            app:srcCompat="@android:drawable/screen_background_light_transparent" />
 
         <TextView
             android:id="@+id/txtWins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="94dp"
-            android:layout_marginTop="151dp"
+            android:layout_marginTop="155dp"
             android:text="Wins"
             android:textColor="@android:color/holo_green_light"
+            android:textSize="24sp"
             android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtLosses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="151dp"
-            android:text="Losses"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="visible"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/txtWins"
-            android:layout_marginLeft="21dp" />
-
-        <TextView
-            android:id="@+id/txtWinRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="151dp"
-            android:text="Win Rate"
-            android:textColor="@android:color/white"
-            android:visibility="visible"
-            app:layout_constraintHorizontal_bias="0.015"
-            app:layout_constraintLeft_toRightOf="@+id/txtLosses"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/txtLosses"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtWinValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="114dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:textColor="@android:color/white"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/txtLossesValue"
             app:layout_constraintTop_toBottomOf="@+id/txtWins" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="102dp"
+            android:text="TextView"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.501" />
+
+        <TextView
+            android:id="@+id/txtLosses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="155dp"
+            android:text="Losses"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="24sp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toRightOf="@+id/txtWins"
+            app:layout_constraintRight_toLeftOf="@+id/txtWinRate"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtLossesValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:textColor="@android:color/white"
-            app:layout_constraintHorizontal_bias="0.435"
+            android:textSize="20sp"
             app:layout_constraintLeft_toRightOf="@+id/txtWinValue"
             app:layout_constraintRight_toLeftOf="@+id/txtWinRateValue"
             app:layout_constraintTop_toBottomOf="@+id/txtLosses" />
@@ -105,10 +86,24 @@
             android:id="@+id/txtWinRateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="135dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/txtLossesValue"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtWinRate" />
+
+        <TextView
+            android:id="@+id/txtWinRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="155dp"
+            android:text="Win Rate"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toRightOf="@+id/txtLosses"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

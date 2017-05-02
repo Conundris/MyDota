@@ -3,6 +3,8 @@ package mobileapp.jbr.mydota;
 import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -65,7 +67,8 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         actionBar = getActionBar();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), 3);
@@ -73,6 +76,7 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setBackgroundColor(Color.LTGRAY);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -94,38 +98,6 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
 
             }
         });
-
-       /*     // Instantiate the RequestQueue.
-            RequestQueue queue = Volley.newRequestQueue(this);
-            String url ="https://api.opendota.com/api/players/70677728";
-
-            // Request a jsonobject response from the provided URL.
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject profile = response.getJSONObject("profile");
-                            //mTextView.setText(profile.getString("personaname"));
-                            //new DownloadImageTask(mImageView).execute(profile.getString("avatarfull"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        //mTextView.setText("Did not work.");
-                    }
-                });
-    // Add the request to the RequestQueue.
-            queue.add(jsObjRequest);
-
-
-         */
-
     }
 
     @Override
@@ -154,37 +126,6 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-   // public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-      /*  private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_activity_account, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

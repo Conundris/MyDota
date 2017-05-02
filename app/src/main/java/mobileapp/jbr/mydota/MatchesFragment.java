@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -81,6 +82,15 @@ public class MatchesFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         adapter = new MatchesListAdapter(getActivity(), matches);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Match itemClicked = (Match) adapter.getItem(position);
+
+
+            }
+        });
 
         getMatches();
 
