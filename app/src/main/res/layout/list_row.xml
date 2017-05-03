@@ -21,7 +21,8 @@
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:textSize="@dimen/title"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
 
     <!-- Rating -->
     <TextView
@@ -46,7 +47,7 @@
 
     <!-- Release Year -->
     <TextView
-        android:id="@+id/releaseYear"
+        android:id="@+id/stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

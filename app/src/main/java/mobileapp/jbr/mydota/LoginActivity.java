@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.Timer;
 
 import mobileapp.jbr.mydota.Models.Hero;
+import mobileapp.jbr.mydota.Models.Match;
 
 /**
  * A login screen that offers login via email/password.
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         Configuration dbConfiguration = new Configuration.Builder(this)
                 .setDatabaseName("MyDb.db")
                 .addModelClass(Hero.class)
+                .addModelClass(Match.class)
                 //.addModelClass(Topic.class)
                 //.addModelClass(Conference.class)
                 .create();

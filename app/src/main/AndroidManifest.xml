@@ -50,7 +50,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mobileapp.jbr.mydota.LoginActivity" />
         </activity>
-        <activity android:name=".MatchActivity"></activity>
+        <activity android:name=".MatchActivity"
+            android:label="MatchActivity"></activity>
     </application>
 
 </manifest>

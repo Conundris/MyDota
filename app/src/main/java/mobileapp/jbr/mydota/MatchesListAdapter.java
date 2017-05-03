@@ -59,7 +59,7 @@ public class MatchesListAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
-        TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
+        TextView stats = (TextView) convertView.findViewById(R.id.stats);
 
         // getting movie data for the row
         Match m = matches.get(position);
@@ -82,7 +82,7 @@ public class MatchesListAdapter extends BaseAdapter {
         genre.setText(Hero.findByGUID(m.hero_id).localizedName);
 
         // release year
-        year.setText(String.valueOf("2014"));
+        stats.setText(m.kills + "/" + m.deaths + "/" + m.assists);
 
         return convertView;
     }

@@ -8,7 +8,7 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 @Table(name = "Match")
-public class Match
+public class Match extends Model
 {
     @Column(name = "assists")
     public int assists;
@@ -35,14 +35,14 @@ public class Match
     @Column(name = "version")
     public int version;
 
-    public Match() {}
+    public Match() { super(); }
 
     //find items by id
-    public static Hero findbyMatchID(String id){
-        return new Select().from(Hero.class).where("matchID = ?", id).executeSingle();
+    public static Match findbyMatchID(String id){
+        return new Select().from(Match.class).where("matchID = ?", id).executeSingle();
     }
     //retrieve all items
-    public static List<Hero> getAllMatches() {
-        return new Select().from(Hero.class).orderBy("id DESC").execute();
+    public static List<Match> getAllMatches() {
+        return new Select().from(Match.class).orderBy("id DESC").execute();
     }
 }

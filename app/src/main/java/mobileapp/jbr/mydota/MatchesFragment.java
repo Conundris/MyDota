@@ -1,9 +1,11 @@
 package mobileapp.jbr.mydota;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -36,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MatchesFragment extends Fragment {
+public class MatchesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -83,17 +86,9 @@ public class MatchesFragment extends Fragment {
         adapter = new MatchesListAdapter(getActivity(), matches);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Match itemClicked = (Match) adapter.getItem(position);
-
-
-            }
-        });
-
         getMatches();
 
+        listView.setOnItemClickListener(this);
         return view;
     }
 
@@ -111,6 +106,9 @@ public class MatchesFragment extends Fragment {
                             // loop through each json object
                                 long startTime = System.nanoTime();
 
+                            ActiveAndroid.beginTransaction();
+                            try
+                            {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject row = (JSONObject) response.get(i);
@@ -128,13 +126,19 @@ public class MatchesFragment extends Fragment {
                                     match.radiant_win = row.getBoolean("radiant_win");
                                     match.player_slot = row.getInt("player_slot");
 
+                                    match.save();
                                     matches.add(match);
                                 }
+                                ActiveAndroid.setTransactionSuccessful();
                                 long endTime = System.nanoTime();
                                 Toast.makeText(getContext(),
                                         "Matches Loaded", Toast.LENGTH_LONG).show();
                                 Log.d("VolleyRequest", "Got All Matches: " + ((endTime - startTime) / 1000000));
-
+                            }
+                        finally {
+                            ActiveAndroid.endTransaction();
+                                Log.d("ActiveAndroid", "Transaction Ended");
+                        }
                             // notifying list adapter about data changes
                             // so that it renders the list view with updated data
                             adapter.notifyDataSetChanged();
@@ -173,6 +177,15 @@ public class MatchesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Match itemClicked = (Match) adapter.getItem(position);
+
+        Intent intent = new Intent(getActivity(), MatchActivity.class);
+        intent.putExtra("matchID", itemClicked.match_id);
+        startActivity(intent);
     }
 
     /**
