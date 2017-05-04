@@ -2,6 +2,7 @@ package mobileapp.jbr.mydota;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private String jsonResponse;
 
     private boolean isValid;
+    private long account_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +68,17 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSteam32IDTextView.getText() != null && !mSteam32IDTextView.getText().toString().equals("") && accountFound()){
-                    Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
-                    intent.putExtra("ID", mSteam32IDTextView.getText().toString()); // can be used to send data over activites
 
-                    saveSteamID();
+                if(mSteam32IDTextView.getText() != null && !mSteam32IDTextView.getText().toString().equals("")){
 
-                    startActivity(intent);
+                        Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
+                        intent.putExtra("ID", mSteam32IDTextView.getText().toString()); // can be used to send data over activites
+
+                        saveSteamID();
+
+                        startActivity(intent);
                 } else{
-                    Toast msg = Toast.makeText(getApplicationContext(), "Please enter a steamID", Toast.LENGTH_LONG);
+                    Toast msg = Toast.makeText(getApplicationContext(), "Please enter a SteamID", Toast.LENGTH_LONG);
                     msg.setGravity(Gravity.CENTER, msg.getXOffset() / 2, msg.getYOffset() / 2);
                     msg.show();
                 }
@@ -82,37 +86,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private boolean accountFound() {
-
-        String url ="https://api.opendota.com/api/players/" + mSteam32IDTextView.getText() + "/wl";
-        // Request a jsonobject response from the provided URL.
-        JsonObjectRequest JORequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response.toString());
-                        try {
-                            if(response.getString("personaname").equals("")) {
-                                isValid = false;
-                            } else {
-                                isValid = true;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-        AppController.getInstance().addToRequestQueue(JORequest);
-        return isValid;
     }
 
     private void populateHeroes() {
@@ -160,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            VolleyLog.d("VolleyRequest", "Error: " + e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
