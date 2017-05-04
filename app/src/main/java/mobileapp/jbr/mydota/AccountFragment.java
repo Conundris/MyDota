@@ -44,6 +44,8 @@ public class AccountFragment extends Fragment {
     private int lossRate;
     private Account account;
 
+    private SharedPreferences.Editor editor;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -145,7 +147,6 @@ public class AccountFragment extends Fragment {
                         try {
                             JSONObject profile = response.getJSONObject("profile");
 
-                            System.out.println(profile.toString());
                             textView.setText(profile.getString("personaname"));
                             new DownloadImageTask(imageView).execute(profile.getString("avatarfull"));
                         } catch (JSONException e) {

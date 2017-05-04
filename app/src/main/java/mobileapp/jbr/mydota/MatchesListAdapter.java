@@ -15,27 +15,27 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.List;
 
 import mobileapp.jbr.mydota.Models.Hero;
-import mobileapp.jbr.mydota.Models.Match;
+import mobileapp.jbr.mydota.Models.RecentMatch;
 
 public class MatchesListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<Match> matches;
+    private List<RecentMatch> recentMatches;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public MatchesListAdapter(Activity activity, List<Match> matches) {
+    public MatchesListAdapter(Activity activity, List<RecentMatch> recentMatches) {
         this.activity = activity;
-        this.matches = matches;
+        this.recentMatches = recentMatches;
     }
 
     @Override
     public int getCount() {
-        return matches.size();
+        return recentMatches.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return matches.get(location);
+        return recentMatches.get(location);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MatchesListAdapter extends BaseAdapter {
         TextView stats = (TextView) convertView.findViewById(R.id.stats);
 
         // getting movie data for the row
-        Match m = matches.get(position);
+        RecentMatch m = recentMatches.get(position);
 
         // thumbnail image
         thumbNail.setImageUrl(Hero.findByGUID(m.hero_id).url, imageLoader);

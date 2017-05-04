@@ -51,7 +51,8 @@
                 android:value="mobileapp.jbr.mydota.LoginActivity" />
         </activity>
         <activity android:name=".MatchActivity"
-            android:label="MatchActivity"></activity>
+            android:label="MatchActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobileapp.jbr.mydota.MatchActivity">
+    tools:context="mobileapp.jbr.mydota.MatchActivity"
+    android:background="@android:color/black">
 
     <TextView
         android:id="@+id/txtVictory"
@@ -12,105 +13,76 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="95dp"
         android:text="TextView"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="95dp" />
-
-    <TextView
-        android:id="@+id/txtGameMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="TextView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtVictory" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtKillsRadiant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintRight_toLeftOf="@+id/txtTime"
-        android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="13dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="28sp"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.853"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtGameMode" />
+        app:layout_constraintRight_toLeftOf="@+id/txtTime"
+        app:layout_constraintTop_toBottomOf="@+id/txtVictory" />
 
     <TextView
         android:id="@+id/txtDireKills"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintLeft_toRightOf="@+id/txtTime"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="13dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="28sp"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintLeft_toRightOf="@+id/txtTime"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtGameMode" />
+        app:layout_constraintTop_toBottomOf="@+id/txtVictory" />
 
     <TextView
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="13dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtGameMode"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtVictory"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <TextView
         android:id="@+id/txtRegionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="17dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtTime"
-        android:layout_marginLeft="121dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/txtAvgMMRText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="17dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtTime"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/txtRegionText"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.198" />
+        android:layout_marginLeft="148dp"
+        android:layout_marginTop="16dp"
+        android:text="Region"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTime" />
 
     <TextView
         android:id="@+id/txtRegion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegionText"
-        android:layout_marginLeft="121dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="17dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegionText" />
 
-    <TextView
-        android:id="@+id/txtAvgMMR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtAvgMMRText"
-        app:layout_constraintLeft_toRightOf="@+id/txtRegion"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.198" />
 </android.support.constraint.ConstraintLayout>

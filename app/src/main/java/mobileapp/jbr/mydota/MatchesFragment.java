@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import mobileapp.jbr.mydota.Models.Match;
+import mobileapp.jbr.mydota.Models.RecentMatch;
 import mobileapp.jbr.mydota.dummy.DummyContent.DummyItem;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -47,7 +46,7 @@ public class MatchesFragment extends Fragment implements AdapterView.OnItemClick
     private OnListFragmentInteractionListener mListener;
 
     private int steamID;
-    private List<Match> matches = new ArrayList<>();
+    private List<RecentMatch> recentMatches = new ArrayList<>();
     private ListView listView;
     private MatchesListAdapter adapter;
 
@@ -83,7 +82,7 @@ public class MatchesFragment extends Fragment implements AdapterView.OnItemClick
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
         //Get Items in View
         listView = (ListView) view.findViewById(R.id.list);
-        adapter = new MatchesListAdapter(getActivity(), matches);
+        adapter = new MatchesListAdapter(getActivity(), recentMatches);
         listView.setAdapter(adapter);
 
         getMatches();
@@ -93,7 +92,7 @@ public class MatchesFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     private void getMatches() {
-        String url ="https://api.opendota.com/api/players/" + steamID + "/matches?limit=10";
+        String url ="https://api.opendota.com/api/players/" + steamID + "/recentMatches?limit=10";
         // Request a jsonobject response from the provided URL.
         JsonArrayRequest JORequest =  new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -113,26 +112,30 @@ public class MatchesFragment extends Fragment implements AdapterView.OnItemClick
 
                                     JSONObject row = (JSONObject) response.get(i);
 
-                                    Match match = new Match();
-                                    match.match_id = row.getString("match_id");
-                                    match.assists = row.getInt("assists");
-                                    match.deaths = row.getInt("deaths");
-                                    match.kills = row.getInt("kills");
-                                    match.start_time = row.getDouble("start_time");
-                                    match.duration = row.getInt("duration");
-                                    match.game_mode = row.getInt("game_mode");
-                                    match.hero_id = row.getInt("hero_id");
-                                    match.lobby_type = row.getInt("lobby_type");
-                                    match.radiant_win = row.getBoolean("radiant_win");
-                                    match.player_slot = row.getInt("player_slot");
+                                    RecentMatch recentMatch = new RecentMatch();
+                                    recentMatch.match_id = row.getString("match_id");
+                                    recentMatch.assists = row.getInt("assists");
+                                    recentMatch.deaths = row.getInt("deaths");
+                                    recentMatch.kills = row.getInt("kills");
+                                    recentMatch.start_time = row.getDouble("start_time");
+                                    recentMatch.duration = row.getInt("duration");
+                                    recentMatch.game_mode = row.getInt("game_mode");
+                                    recentMatch.hero_id = row.getInt("hero_id");
+                                    recentMatch.lobby_type = row.getInt("lobby_type");
+                                    recentMatch.radiant_win = row.getBoolean("radiant_win");
+                                    recentMatch.player_slot = row.getInt("player_slot");
+                                    recentMatch.xp_per_min = row.getInt("xp_per_min");
+                                    recentMatch.gold_per_min = row.getInt("gold_per_min");
+                                    recentMatch.hero_damage = row.getInt("hero_damage");
+                                    recentMatch.tower_damage = row.getInt("tower_damage");
+                                    recentMatch.hero_healing = row.getInt("hero_healing");
+                                    recentMatch.last_hits = row.getInt("last_hits");
 
-                                    match.save();
-                                    matches.add(match);
+                                    recentMatch.save();
+                                    recentMatches.add(recentMatch);
                                 }
                                 ActiveAndroid.setTransactionSuccessful();
                                 long endTime = System.nanoTime();
-                                Toast.makeText(getContext(),
-                                        "Matches Loaded", Toast.LENGTH_LONG).show();
                                 Log.d("VolleyRequest", "Got All Matches: " + ((endTime - startTime) / 1000000));
                             }
                         finally {
@@ -181,7 +184,7 @@ public class MatchesFragment extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Match itemClicked = (Match) adapter.getItem(position);
+        RecentMatch itemClicked = (RecentMatch) adapter.getItem(position);
 
         Intent intent = new Intent(getActivity(), MatchActivity.class);
         intent.putExtra("matchID", itemClicked.match_id);

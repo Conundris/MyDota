@@ -64,10 +64,10 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
         setContentView(R.layout.activity_account);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         actionBar = getActionBar();
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -141,7 +141,6 @@ public class AccountActivity extends AppCompatActivity implements MatchesFragmen
 
         @Override
         public Fragment getItem(int position) {
-
             switch (position) {
                 case 0:
                     AccountFragment tab1 = new AccountFragment();

@@ -3,38 +3,31 @@ package mobileapp.jbr.mydota;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Timer;
-
 import mobileapp.jbr.mydota.Models.Hero;
 import mobileapp.jbr.mydota.Models.Match;
+import mobileapp.jbr.mydota.Models.RecentMatch;
 
 /**
  * A login screen that offers login via email/password.
@@ -47,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     // temporary string to show the parsed response
     private String jsonResponse;
 
+    private boolean isValid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         Configuration dbConfiguration = new Configuration.Builder(this)
                 .setDatabaseName("MyDb.db")
                 .addModelClass(Hero.class)
+                .addModelClass(RecentMatch.class)
                 .addModelClass(Match.class)
-                //.addModelClass(Topic.class)
-                //.addModelClass(Conference.class)
                 .create();
 
         ActiveAndroid.initialize(dbConfiguration);
@@ -72,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSteam32IDTextView.getText() != null && !mSteam32IDTextView.getText().toString().equals("")){
+                if(mSteam32IDTextView.getText() != null && !mSteam32IDTextView.getText().toString().equals("") && accountFound()){
                     Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
                     intent.putExtra("ID", mSteam32IDTextView.getText().toString()); // can be used to send data over activites
 
@@ -88,6 +82,37 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean accountFound() {
+
+        String url ="https://api.opendota.com/api/players/" + mSteam32IDTextView.getText() + "/wl";
+        // Request a jsonobject response from the provided URL.
+        JsonObjectRequest JORequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
+                        try {
+                            if(response.getString("personaname").equals("")) {
+                                isValid = false;
+                            } else {
+                                isValid = true;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(JORequest);
+        return isValid;
     }
 
     private void populateHeroes() {

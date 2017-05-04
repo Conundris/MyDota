@@ -76,7 +76,7 @@
             android:textSize="24sp"
             android:visibility="visible"
             app:layout_constraintLeft_toRightOf="@+id/txtWins"
-            app:layout_constraintRight_toLeftOf="@+id/txtWinRate"
+            app:layout_constraintRight_toLeftOf="@+id/txtKillsText"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -99,10 +99,10 @@
             android:textSize="20sp"
             app:layout_constraintLeft_toRightOf="@+id/txtLossesValue"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtWinRate" />
+            app:layout_constraintTop_toBottomOf="@+id/txtKillsText" />
 
         <TextView
-            android:id="@+id/txtWinRate"
+            android:id="@+id/txtKillsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="184dp"
