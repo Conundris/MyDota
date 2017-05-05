@@ -52,6 +52,7 @@
         </activity>
         <activity android:name=".MatchActivity"
             android:label="MatchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

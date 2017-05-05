@@ -124,8 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 long endTime = System.nanoTime();
                                 ActiveAndroid.setTransactionSuccessful();
-                                Toast.makeText(getApplicationContext(),
-                                        "Successfull", Toast.LENGTH_LONG).show();
                                 Log.d("VolleyRequest", "Got All Heroes: " + ((endTime - startTime) / 1000000));
                             }
                             finally {
